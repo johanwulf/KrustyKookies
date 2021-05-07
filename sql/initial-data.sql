@@ -9,3 +9,14 @@ INSERT INTO Customers(name, address) VALUES
     ('Skånekakor AB', 'Perstorp')
 ;
 
+INSERT INTO Cookie(cookie_name) VALUES
+	('Almond Delight'),
+	('Amneris'),
+	('Berliner'),
+	('Nut Cookie'),
+	('Nut Ring'),
+	('Tango')
+;
+
+INSERT INTO Ing
+	

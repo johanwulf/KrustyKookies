@@ -51,3 +51,13 @@ CREATE TABLE RecipeItem(
     quantity INT,
 
 );
+
+CREATE TABLE Ingredient(
+    ingredient_ID INT AUTO_INCREMENT,
+    ingredient_name VARCHAR(32),
+    stock INT,
+    unit VARCHAR(20),
+    delivery_date DATETIME,
+    delivery_quantity DATETIME
+);
+    
