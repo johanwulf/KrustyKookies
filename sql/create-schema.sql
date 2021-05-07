@@ -26,11 +26,7 @@ CREATE TABLE Cookie (
     cookie_name VARCHAR(20),
     PRIMARY KEY (cookie_id)
 );
-CREATE TABLE Cookie (
-    cookie_id INT AUTO_INCREMENT,
-    cookie_name VARCHAR(20),
-    PRIMARY KEY (cookie_id)
-);
+
 CREATE TABLE Pallet (
     id INT AUTO_INCREMENT,
     production_date DATETIME,
