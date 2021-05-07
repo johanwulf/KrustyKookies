@@ -58,7 +58,7 @@ CREATE TABLE Ingredient(
 CREATE TABLE Recipes
 (
     cookie_name VARCHAR(20),
-    ingredient_Id INTEGER NOT NULL,
+    ingredient_name VARCHAR(32),
     quantity INTEGER NOT NULL,    
     FOREIGN KEY (cookie_name) REFERENCES Cookie(cookie_name),
     FOREIGN KEY (ingredient_name) REFERENCES Ingredient(ingredient_name)
