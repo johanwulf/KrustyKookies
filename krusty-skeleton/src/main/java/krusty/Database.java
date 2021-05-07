@@ -3,12 +3,10 @@ package krusty;
 import spark.Request;
 import spark.Response;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.sql.*;
-import java.util.Arrays;
-import java.util.Map;
-import java.util.TreeMap;
-
-import static krusty.Jsonizer.toJson;
 
 public class Database {
 	/**
@@ -80,10 +78,22 @@ public class Database {
 	}
 
 	public String reset(Request req, Response res) {
-		// Resets all tables
+		String path = "src/main/java/krusty/reset.sql";
 
+		try {
+			String sql = new String(Files.readAllBytes(Paths.get(path)));
 
-		return "{}";
+			try {
+				Statement stmt = conn.createStatement();
+				stmt.executeQuery(sql);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		return "";
 	}
 
 	public String createPallet(Request req, Response res) {
