@@ -1,4 +1,4 @@
-INSERT INTO Customers(name, address) VALUES
+INSERT INTO Customers(customer_name, address) VALUES
     ('Finkakor AB', 'Helsingborg'),
     ('Småbröd AB', 'Malmö'),
     ('Kaffebröd AB', 'Landskrona'),
@@ -18,26 +18,26 @@ INSERT INTO Cookie(cookie_name) VALUES
     ('Tango')
 ;
 
-INSERT INTO Ingredient(name, stock, unit) VALUES
-    ('Bread crumbs', 500 000, 'g'),
-    ('Butter', 500 000, 'g'),
-    ('Chocolate', 500 000, 'g'),
-    ('Chopped Almonds', 500 000, 'g'),
-    ('Cinnamon', 500 000, 'g'),
-    ('Egg whites', 500 000, 'ml'),
-    ('Eggs', 500 000, 'g'),
-    ('Fine-ground nuts', 500 000, 'g'),
-    ('Flour', 500 000, 'g'),
-    ('Ground, roasted nuts', 500 000, 'g'),
-    ('Icing sugar', 500 000, 'g'),
-    ('Marzipan', 500 000, 'g'),
-    ('Potato starch', 500 000, 'g'),
-    ('Roasted, chopped nuts', 500 000, 'g'),
-    ('Sodium bicarbonate', 500 000, 'g'),
-    ('Sugar', 500 000, 'g'),
-    ('Vanilla sugar', 500 000, 'g'),
-    ('Vanilla', 500 000, 'g'),
-    ('Wheat flour', 500 000, 'g'),
+INSERT INTO Ingredient(ingredient_name, stock, unit) VALUES
+    ('Bread crumbs', 500000, 'g'),
+    ('Butter', 500000, 'g'),
+    ('Chocolate', 500000, 'g'),
+    ('Chopped Almonds', 500000, 'g'),
+    ('Cinnamon', 500000, 'g'),
+    ('Egg whites', 500000, 'ml'),
+    ('Eggs', 500000, 'g'),
+    ('Fine-ground nuts', 500000, 'g'),
+    ('Flour', 500000, 'g'),
+    ('Ground, roasted nuts', 500000, 'g'),
+    ('Icing sugar', 500000, 'g'),
+    ('Marzipan', 500000, 'g'),
+    ('Potato starch', 500000, 'g'),
+    ('Roasted, chopped nuts', 500000, 'g'),
+    ('Sodium bicarbonate', 500000, 'g'),
+    ('Sugar', 500000, 'g'),
+    ('Vanilla sugar', 500000, 'g'),
+    ('Vanilla', 500000, 'g'),
+    ('Wheat flour', 500000, 'g')
 ;
 
 
