@@ -34,7 +34,7 @@ public class Database {
 
 	public String getCustomers(Request req, Response res) {
 		Statement stmt = conn.createStatement();
-		String sql = "SELECT * FROM Customers";
+		String sql = "SELECT name, address FROM customers";
 		ResultSet rs = stmt.executeQuery(sql);
 		String json = JSONiszer.toJSON(rs, "customers");
 
