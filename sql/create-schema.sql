@@ -1,15 +1,15 @@
-DROP TABLE IF EXISTS Customers;
-DROP TABLE IF EXISTS Orders;
-DROP TABLE IF EXISTS Pallet;
 DROP TABLE IF EXISTS OrderSpec;
-DROP TABLE IF EXISTS Cookie;
 DROP TABLE IF EXISTS RecipeItem;
 DROP TABLE IF EXISTS Ingredient;
+DROP TABLE IF EXISTS Pallet;
+DROP TABLE IF EXISTS Cookie;
+DROP TABLE IF EXISTS Orders;
+DROP TABLE IF EXISTS Customers;
 
 CREATE TABLE Customers (
-    name VARCHAR(20),
+    customer_name VARCHAR(20),
     address VARCHAR(20),
-    PRIMARY KEY (name)
+    PRIMARY KEY (customer_name)
 );
 
 CREATE TABLE Orders (
@@ -18,7 +18,7 @@ CREATE TABLE Orders (
     delivery_date DATETIME,
     customer_name VARCHAR(20),
     PRIMARY KEY (order_id),
-    FOREIGN KEY (customer_name) REFERENCES Customers(name) 
+    FOREIGN KEY (customer_name) REFERENCES Customers(customer_name) 
 );
 
 CREATE TABLE Cookie (
@@ -35,30 +35,31 @@ CREATE TABLE Pallet (
     order_id INT,
     cookie_id INT,
     PRIMARY KEY (id),
-    FOREIGN KEY (order_id) REFERENCES orders(order_id),
-    FOREIGN KEY (cookie_id) REFERENCES cookie(cookie_id) 
+    FOREIGN KEY (order_id) REFERENCES Orders(order_id),
+    FOREIGN KEY (cookie_id) REFERENCES Cookie(cookie_id) 
 );
 
 CREATE TABLE OrderSpec (
     quantity INT,
     order_id INT,
     cookie_id INT,
-    FOREIGN KEY (order_id) REFERENCES orders(order_id),
-    FOREIGN KEY (cookie_id) REFERENCES cookie(cookie_id)
+    FOREIGN KEY (order_id) REFERENCES Orders(order_id),
+    FOREIGN KEY (cookie_id) REFERENCES Cookie(cookie_id)
 );
 
 CREATE TABLE Ingredient(
-    ingredient_ID INT AUTO_INCREMENT,
+    ingredient_id INT AUTO_INCREMENT,
     ingredient_name VARCHAR(32),
     stock INT,
     unit VARCHAR(20),
     delivery_date DATETIME,
     delivery_quantity DATETIME,
-    PRIMARY KEY (ingredient_ID)
+    PRIMARY KEY (ingredient_id)
 );
 
 CREATE TABLE RecipeItem(
-    ingredient VARCHAR(32),
+    ingredient_id INT,
     quantity INT,
-    FOREIGN KEY (ingredient) REFERENCES Ingredient(ingredient_name) 
-);  
+    FOREIGN KEY (ingredient_id) REFERENCES Ingredient(ingredient_id) 
+);
+
