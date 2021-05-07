@@ -23,7 +23,11 @@ public class Database {
 	private Connection conn;
 
 	public void connect() {
-		conn = DriverManager.getConnection(jdbcString, jdbcUsername, jdbcPassword);
+		try {
+			conn = DriverManager.getConnection(jdbcString, jdbcUsername, jdbcPassword);
+		} catch (SQLException error) {
+			System.out.println(error);
+		}
 	}
 
 	// TODO: Implement and change output in all methods below!
