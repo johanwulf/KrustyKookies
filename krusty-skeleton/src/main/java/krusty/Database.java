@@ -3,18 +3,16 @@ package krusty;
 import spark.Request;
 import spark.Response;
 
-import java.sql.DriverManager;
-import java.util.Arrays;
-import java.util.Map;
-import java.util.TreeMap;
-
-import static krusty.Jsonizer.toJson;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.sql.*;
 
 public class Database {
 	/**
 	 * Modify it to fit your environment and then use this string when connecting to your database!
 	 */
-	private static final String jdbcString = "jdbc:mysql://localhost/krusty";
+	private static final String jdbcString = "jdbc:mysql://127.0.0.1:3306/krusty?serverTimezone=Europe/Stockholm";
 
 	// For use with MySQL or PostgreSQL
 	private static final String jdbcUsername = "root";
@@ -23,10 +21,12 @@ public class Database {
 	private Connection conn;
 
 	public void connect() {
+
 		try {
 			conn = DriverManager.getConnection(jdbcString, jdbcUsername, jdbcPassword);
-		} catch (SQLException error) {
-			System.out.println(error);
+			System.out.println("success");
+		} catch (SQLException e) {
+			System.out.println(e);
 		}
 	}
 
@@ -40,14 +40,14 @@ public class Database {
 	}
 
 	public String getRawMaterials(Request req, Response res) {
-		String sql = ""; // TO DO: Fix sql statement
+		String sql = "SELECT ingredient_name, stock, unit FROM ingredient";
 		String title = "raw-materials";
 
 		return getJson(sql, title);
 	}
 
 	public String getCookies(Request req, Response res) {
-		String sql = ""; // TO DO: Fix sql statement
+		String sql = "SELECT cookie_name FROM cookie";
 		String title = "cookies";
 
 		return getJson(sql, title);
@@ -73,28 +73,36 @@ public class Database {
 		 * params from request
 		 */
 
-		
-
 
 		return getJson(sql, title);
 	}
 
 	public String reset(Request req, Response res) {
-		// Resets all tables
+		String path = "src/main/java/krusty/reset.sql";
 
+		try {
+			String sql = new String(Files.readAllBytes(Paths.get(path)));
+			Statement stmt = conn.createStatement();
+			stmt.executeQuery(sql);
+		} catch (IOException | SQLException e) {
+			e.printStackTrace();
+		}
 
-
-		return "{}";
+		return "";
 	}
 
 	public String createPallet(Request req, Response res) {
 		return "{}";
 	}
-	
-	private String getJson(String sql, String title) {
-		Statement stmt = conn.createStatement();
-		ResultSet rs = stmt.executeQuery(sql);
 
-		return JSONizer.toJSON("rs", title)
+	private String getJson(String sql, String title) {
+		try {
+			Statement stmt = conn.createStatement();
+			ResultSet rs = stmt.executeQuery(sql);
+
+			return Jsonizer.toJson(rs, title);
+		} catch (SQLException e) {
+			return "";
+		}
 	}
 }

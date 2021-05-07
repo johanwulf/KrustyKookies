@@ -26,11 +26,7 @@ CREATE TABLE Cookie (
     cookie_name VARCHAR(20),
     PRIMARY KEY (cookie_id)
 );
-CREATE TABLE Cookie (
-    cookie_id INT AUTO_INCREMENT,
-    cookie_name VARCHAR(20),
-    PRIMARY KEY (cookie_id)
-);
+
 CREATE TABLE Pallet (
     id INT AUTO_INCREMENT,
     production_date DATETIME,
@@ -61,9 +57,11 @@ CREATE TABLE Ingredient(
     PRIMARY KEY (ingredient_id)
 );
 
-CREATE TABLE RecipeItem(
-    ingredient_id INT,
-    quantity INT,
-    FOREIGN KEY (ingredient_id) REFERENCES Ingredient(ingredient_id) 
-);
-
+CREATE TABLE Recipes
+(
+    cookie_id INTEGER NOT NULL,
+    ingredient_Id INTEGER NOT NULL,
+    quantity INTEGER NOT NULL,    
+    FOREIGN KEY (cookie_id) REFERENCES Cookie(cookie_id),
+    FOREIGN KEY (ingredient_id) REFERENCES Ingredient(ingredient_id)
+    );
