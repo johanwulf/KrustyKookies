@@ -21,10 +21,9 @@ CREATE TABLE Orders (
     FOREIGN KEY (customer_name) REFERENCES Customers(customer_name) 
 );
 
-CREATE TABLE Cookie (
-    cookie_id INT AUTO_INCREMENT,
+CREATE TABLE Cookie (    
     cookie_name VARCHAR(20),
-    PRIMARY KEY (cookie_id)
+    PRIMARY KEY (cookie_name)
 );
 
 CREATE TABLE Pallet (
@@ -33,33 +32,34 @@ CREATE TABLE Pallet (
     delivery_date DATETIME,
     blocked BOOLEAN,
     order_id INT,
-    cookie_id INT,
+    cookie_name VARCHAR(20),
     PRIMARY KEY (id),
     FOREIGN KEY (order_id) REFERENCES Orders(order_id),
-    FOREIGN KEY (cookie_id) REFERENCES Cookie(cookie_id) 
+    FOREIGN KEY (cookie_name) REFERENCES Cookie(cookie_name) 
 );
 
 CREATE TABLE OrderSpec (
     quantity INT,
     order_id INT,
-    cookie_id INT,
+    cookie_name VARCHAR(20),
     FOREIGN KEY (order_id) REFERENCES Orders(order_id),
-    FOREIGN KEY (cookie_id) REFERENCES Cookie(cookie_id)
+    FOREIGN KEY (cookie_name) REFERENCES Cookie(cookie_name)
 );
 
-CREATE TABLE Ingredient(
-    ingredient_id INT AUTO_INCREMENT,
+CREATE TABLE Ingredient(    
     ingredient_name VARCHAR(32),
     stock INT,
     unit VARCHAR(20),
     delivery_date DATETIME,
     delivery_quantity DATETIME,
-    PRIMARY KEY (ingredient_id)
+    PRIMARY KEY (ingredient_name)
 );
 
-CREATE TABLE RecipeItem(
-    ingredient_id INT,
-    quantity INT,
-    FOREIGN KEY (ingredient_id) REFERENCES Ingredient(ingredient_id) 
-);
-
+CREATE TABLE Recipes
+(
+    cookie_name VARCHAR(20),
+    ingredient_name VARCHAR(32),
+    quantity INTEGER NOT NULL,    
+    FOREIGN KEY (cookie_name) REFERENCES Cookie(cookie_name),
+    FOREIGN KEY (ingredient_name) REFERENCES Ingredient(ingredient_name)
+    );
