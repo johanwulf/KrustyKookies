@@ -71,7 +71,7 @@ public class Database {
 	private Connection conn;
 
 	public void connect() {
-
+		System.out.println("connected");
 		try {
 			conn = DriverManager.getConnection(jdbcString, jdbcUsername, jdbcPassword);
 			System.out.println("success");
@@ -83,28 +83,28 @@ public class Database {
 	// TODO: Implement and change output in all methods below!
 
 	public String getCustomers(Request req, Response res) {
-		String sql = "SELECT name, address FROM customers";
+		String sql = "SELECT customer_name, address FROM customers";
 		String title = "customers";
 
 		return getJson(sql, title);
 	}
 
 	public String getRawMaterials(Request req, Response res) {
-		String sql = "SELECT ingredient_name, stock, unit FROM ingredient"; // TO DO: Fix sql statement
+		String sql = "SELECT ingredient_name, stock, unit FROM ingredient";
 		String title = "raw-materials";
 
 		return getJson(sql, title);
 	}
 
 	public String getCookies(Request req, Response res) {
-		String sql = "SELECT cookie_name FROM cookie"; // TO DO: Fix sql statement
+		String sql = "SELECT cookie_name FROM cookie";
 		String title = "cookies";
 
 		return getJson(sql, title);
 	}
 
 	public String getRecipes(Request req, Response res) {
-		String sql = ""; // TO DO: Fix sql statement
+		String sql = "SELECT cookie_name, Recipes.ingredient_name, quantity, unit FROM Recipes, Ingredient WHERE Recipes.ingredient_name = Ingredient.ingredient_name";
 		String title = "recipes";
 
 		return getJson(sql, title);
@@ -123,8 +123,8 @@ public class Database {
 		 * params from request
 		 */
 
-
-		return getJson(sql, title);
+		return "{}";
+		//return getJson(sql, title);
 	}
 
 	public String reset(Request req, Response res) {
@@ -148,7 +148,7 @@ public class Database {
 			}
 		}
 
-		return "";
+		return "{\n\t\"status\": \"ok\"\n}";
 	}
 
 	private String getValueQuery(String table) {
@@ -167,6 +167,22 @@ public class Database {
 	}
 
 	public String createPallet(Request req, Response res) {
+		String cookie = req.queryParams("cookie");
+		String sql = "SELECT * FROM cookie WHERE cookie_name = ?;";
+
+		try {
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			stmt.setString(1, cookie);
+
+
+		} catch (SQLException e) {
+
+		}
+
+
+
+
+
 		return "{}";
 	}
 
