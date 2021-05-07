@@ -3,6 +3,7 @@ package krusty;
 import spark.Request;
 import spark.Response;
 
+import java.sql.DriverManager;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.TreeMap;
@@ -19,8 +20,10 @@ public class Database {
 	private static final String jdbcUsername = "<CHANGE ME>";
 	private static final String jdbcPassword = "<CHANGE ME>";
 
+	private Connection conn;
+
 	public void connect() {
-		// Connect to database here
+		conn = DriverManager.getConnection(jdbcString, jdbcUsername, jdbcPassword);
 	}
 
 	// TODO: Implement and change output in all methods below!
