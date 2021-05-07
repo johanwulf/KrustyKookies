@@ -82,14 +82,9 @@ public class Database {
 
 		try {
 			String sql = new String(Files.readAllBytes(Paths.get(path)));
-
-			try {
-				Statement stmt = conn.createStatement();
-				stmt.executeQuery(sql);
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		} catch (IOException e) {
+			Statement stmt = conn.createStatement();
+			stmt.executeQuery(sql);
+		} catch (IOException | SQLException e) {
 			e.printStackTrace();
 		}
 
