@@ -33,28 +33,38 @@ public class Database {
 	// TODO: Implement and change output in all methods below!
 
 	public String getCustomers(Request req, Response res) {
-		Statement stmt = conn.createStatement();
 		String sql = "SELECT name, address FROM customers";
-		ResultSet rs = stmt.executeQuery(sql);
-		String json = JSONiszer.toJSON(rs, "customers");
+		String title = "customers";
 
-		return json;
+		return getJson(sql, title);
 	}
 
 	public String getRawMaterials(Request req, Response res) {
-		return "{}";
+		String sql = ""; // TO DO: Fix sql statement
+		String title = "raw-materials";
+
+		return getJson(sql, title);
 	}
 
 	public String getCookies(Request req, Response res) {
-		return "{\"cookies\":[]}";
+		String sql = ""; // TO DO: Fix sql statement
+		String title = "cookies";
+
+		return getJson(sql, title);
 	}
 
 	public String getRecipes(Request req, Response res) {
-		return "{}";
+		String sql = ""; // TO DO: Fix sql statement
+		String title = "recipes";
+
+		return getJson(sql, title);
 	}
 
 	public String getPallets(Request req, Response res) {
-		return "{\"pallets\":[]}";
+		String sql = ""; // TO DO: Fix sql statement
+		String title = "pallets";
+
+		return getJson(sql, title);
 	}
 
 	public String reset(Request req, Response res) {
@@ -63,5 +73,12 @@ public class Database {
 
 	public String createPallet(Request req, Response res) {
 		return "{}";
+	}
+	
+	private String getJson(String sql, String title) {
+		Statement stmt = conn.createStatement();
+		ResultSet rs = stmt.executeQuery(sql);
+
+		return JSONizer.toJSON("rs", title)
 	}
 }
