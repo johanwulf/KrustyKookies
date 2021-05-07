@@ -40,14 +40,14 @@ public class Database {
 	}
 
 	public String getRawMaterials(Request req, Response res) {
-		String sql = "SELECT ingredient_name, stock, unit FROM ingredient"; // TO DO: Fix sql statement
+		String sql = "SELECT ingredient_name, stock, unit FROM ingredient";
 		String title = "raw-materials";
 
 		return getJson(sql, title);
 	}
 
 	public String getCookies(Request req, Response res) {
-		String sql = "SELECT cookie_name FROM cookie"; // TO DO: Fix sql statement
+		String sql = "SELECT cookie_name FROM cookie";
 		String title = "cookies";
 
 		return getJson(sql, title);
@@ -104,8 +104,5 @@ public class Database {
 		} catch (SQLException e) {
 			return "";
 		}
-
-
-
 	}
 }
