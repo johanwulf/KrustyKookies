@@ -1,4 +1,4 @@
-DROP TABLE IF EXISTS Customer;
+DROP TABLE IF EXISTS Customers;
 DROP TABLE IF EXISTS Orders;
 DROP TABLE IF EXISTS Pallet;
 DROP TABLE IF EXISTS OrderSpec;
@@ -29,7 +29,7 @@ CREATE TABLE Pallet (
     order_id INT,
     cookie_id INT,
     PRIMARY KEY (id),
-    FOREIGN KEY (order_id) REFERENCES orders(order_id)
+    FOREIGN KEY (order_id) REFERENCES orders(order_id),
     FOREIGN KEY (cookie_id) REFERENCES cookie(cookie_id) 
 );
 
