@@ -64,10 +64,26 @@ public class Database {
 		String sql = ""; // TO DO: Fix sql statement
 		String title = "pallets";
 
+		/**
+		 * from
+		 * to
+		 * cookie
+		 * blocked
+		 * ^
+		 * params from request
+		 */
+
+		
+
+
 		return getJson(sql, title);
 	}
 
 	public String reset(Request req, Response res) {
+		// Resets all tables
+		
+
+
 		return "{}";
 	}
 
