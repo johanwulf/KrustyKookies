@@ -1,4 +1,4 @@
-DROP TABLE IF EXISTS Customer;
+DROP TABLE IF EXISTS Customers;
 DROP TABLE IF EXISTS Orders;
 DROP TABLE IF EXISTS Pallet;
 DROP TABLE IF EXISTS OrderSpec;
@@ -20,7 +20,11 @@ CREATE TABLE Orders (
     PRIMARY KEY (order_id),
     FOREIGN KEY (customer_name) REFERENCES Customers(name) 
 );
-
+CREATE TABLE Cookie (
+    cookie_id INT AUTO_INCREMENT,
+    cookie_name VARCHAR(20),
+    PRIMARY KEY (cookie_id)
+);
 CREATE TABLE Pallet (
     id INT AUTO_INCREMENT,
     production_date DATETIME,
@@ -29,7 +33,7 @@ CREATE TABLE Pallet (
     order_id INT,
     cookie_id INT,
     PRIMARY KEY (id),
-    FOREIGN KEY (order_id) REFERENCES orders(order_id)
+    FOREIGN KEY (order_id) REFERENCES orders(order_id),
     FOREIGN KEY (cookie_id) REFERENCES cookie(cookie_id) 
 );
 
@@ -41,17 +45,9 @@ CREATE TABLE OrderSpec (
     FOREIGN KEY (cookie_id) REFERENCES cookie(cookie_id)
 );
 
-CREATE TABLE Cookie (
-    cookie_id INT AUTO_INCREMENT,
-    cookie_name VARCHAR(20),
-    PRIMARY KEY (cookie_id)
-);
 
-CREATE TABLE RecipeItem(
-    ingredient VARCHAR(32),
-    quantity INT,
-    FOREIGN KEY (ingredient) REFERENCES Ingredient(ingredient_name) 
-);
+
+
 
 CREATE TABLE Ingredient(
     ingredient_ID INT AUTO_INCREMENT,
@@ -60,5 +56,11 @@ CREATE TABLE Ingredient(
     unit VARCHAR(20),
     delivery_date DATETIME,
     delivery_quantity DATETIME
+);
+    
+CREATE TABLE RecipeItem(
+    ingredient VARCHAR(32),
+    quantity INT,
+    FOREIGN KEY (ingredient) REFERENCES Ingredient(ingredient_name) 
 );
     
