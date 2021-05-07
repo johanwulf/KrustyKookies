@@ -7,6 +7,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.sql.*;
+import java.util.Arrays;
+import java.util.List;
 
 public class Database {
 	/**
@@ -102,7 +104,7 @@ public class Database {
 	}
 
 	public String getRecipes(Request req, Response res) {
-		String sql = "SELECT cookie_name, Recipes.ingredient_name, quantity, unit FROM Recipes, Ingredient WHERE Recipes.ingredient_name = Ingredient.ingredient_name"; // TO DO: Fix sql statement
+		String sql = ""; // TO DO: Fix sql statement
 		String title = "recipes";
 
 		return getJson(sql, title);
@@ -127,29 +129,41 @@ public class Database {
 
 	public String reset(Request req, Response res) {
 		String[] tables = {"cookie", "customers", "ingredient", "orders", "orderspec", "pallet", "recipes"};
+		List values = Arrays.asList("cookie", "customers", "ingredient", "recipes");
 
 		for (String table : tables) {
 			try {
 				Statement stmt = conn.createStatement();
 				stmt.execute("SET FOREIGN_KEY_CHECKS=0");
 				String sql = "TRUNCATE TABLE " + table;
-				stmt.executeUpdate(sql);
+				stmt.execute(sql);
+
+				if (values.contains(table)) {
+					stmt.executeUpdate(getValueQuery(table));
+				}
+
+				stmt.execute("SET FOREIGN_KEY_CHECKS=1");
 			} catch (SQLException e){
 				e.printStackTrace();
 			}
 		}
 
-		try {
-			Statement stmt = conn.createStatement();
-			stmt.executeUpdate(Cookie);
-			stmt.executeUpdate(Customers);
-			stmt.executeUpdate(Ingredient);
-			stmt.executeUpdate(Recipes);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		return "";
+	}
 
-		return "{ \"status\": \"ok\" }";
+	private String getValueQuery(String table) {
+		switch (table) {
+			case "cookie":
+				return Cookie;
+			case "customers":
+				return Customers;
+			case "ingredient":
+				return Ingredient;
+			case "recipes":
+				return Recipes;
+			default:
+				return "";
+		}
 	}
 
 	public String createPallet(Request req, Response res) {
