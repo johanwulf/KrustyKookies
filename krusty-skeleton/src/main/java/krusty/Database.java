@@ -102,7 +102,7 @@ public class Database {
 	}
 
 	public String getRecipes(Request req, Response res) {
-		String sql = ""; // TO DO: Fix sql statement
+		String sql = "SELECT cookie_name, Recipes.ingredient_name, quantity, unit FROM Recipes, Ingredient WHERE Recipes.ingredient_name = Ingredient.ingredient_name"; // TO DO: Fix sql statement
 		String title = "recipes";
 
 		return getJson(sql, title);
@@ -149,7 +149,7 @@ public class Database {
 			e.printStackTrace();
 		}
 
-		return "";
+		return "{ \"status\": \"ok\" }";
 	}
 
 	public String createPallet(Request req, Response res) {
