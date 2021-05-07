@@ -46,14 +46,13 @@ CREATE TABLE OrderSpec (
     FOREIGN KEY (cookie_name) REFERENCES Cookie(cookie_name)
 );
 
-CREATE TABLE Ingredient(
-    ingredient_id INT AUTO_INCREMENT,
+CREATE TABLE Ingredient(    
     ingredient_name VARCHAR(32),
     stock INT,
     unit VARCHAR(20),
     delivery_date DATETIME,
     delivery_quantity DATETIME,
-    PRIMARY KEY (ingredient_id)
+    PRIMARY KEY (ingredient_name)
 );
 
 CREATE TABLE Recipes
@@ -62,5 +61,5 @@ CREATE TABLE Recipes
     ingredient_Id INTEGER NOT NULL,
     quantity INTEGER NOT NULL,    
     FOREIGN KEY (cookie_name) REFERENCES Cookie(cookie_name),
-    FOREIGN KEY (ingredient_id) REFERENCES Ingredient(ingredient_id)
+    FOREIGN KEY (ingredient_name) REFERENCES Ingredient(ingredient_name)
     );
