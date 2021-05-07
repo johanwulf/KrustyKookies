@@ -33,7 +33,12 @@ public class Database {
 	// TODO: Implement and change output in all methods below!
 
 	public String getCustomers(Request req, Response res) {
-		return "{}";
+		Statement stmt = conn.createStatement();
+		String sql = "SELECT * FROM Customers";
+		ResultSet rs = stmt.executeQuery(sql);
+		String json = JSONiszer.toJSON(rs, "customers");
+
+		return json;
 	}
 
 	public String getRawMaterials(Request req, Response res) {
