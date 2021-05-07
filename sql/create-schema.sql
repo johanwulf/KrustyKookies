@@ -57,9 +57,11 @@ CREATE TABLE Ingredient(
     PRIMARY KEY (ingredient_id)
 );
 
-CREATE TABLE RecipeItem(
-    ingredient_id INT,
-    quantity INT,
-    FOREIGN KEY (ingredient_id) REFERENCES Ingredient(ingredient_id) 
-);
-
+CREATE TABLE Recipes
+(
+    cookie_id INTEGER NOT NULL,
+    ingredient_Id INTEGER NOT NULL,
+    quantity INTEGER NOT NULL,    
+    FOREIGN KEY (cookie_id) REFERENCES Cookie(cookie_id),
+    FOREIGN KEY (ingredient_id) REFERENCES Ingredient(ingredient_id)
+    );
