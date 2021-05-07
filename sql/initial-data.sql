@@ -10,13 +10,14 @@ INSERT INTO Customers(name, address) VALUES
 ;
 
 INSERT INTO Cookie(cookie_name) VALUES
-	('Almond Delight'),
-	('Amneris'),
-	('Berliner'),
-	('Nut Cookie'),
-	('Nut Ring'),
-	('Tango')
+    ('Almond Delight'),
+    ('Amneris'),
+    ('Berliner'),
+    ('Nut Cookie'),
+    ('Nut Ring'),
+    ('Tango')
 ;
 
-INSERT INTO Ing
+INSERT INTO Ingredient(name, stock, unit) VALUES
+    ('Bread crumbs,
 	
