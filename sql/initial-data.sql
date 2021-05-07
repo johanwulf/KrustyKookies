@@ -37,7 +37,7 @@ INSERT INTO Ingredient(ingredient_name, stock, unit) VALUES
     ('Sugar', 500000, 'g'),
     ('Vanilla sugar', 500000, 'g'),
     ('Vanilla', 500000, 'g'),
-    ('Wheat flour', 500000, 'g'),
+    ('Wheat flour', 500000, 'g')
 ;
 
 
