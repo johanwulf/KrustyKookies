@@ -21,10 +21,9 @@ CREATE TABLE Orders (
     FOREIGN KEY (customer_name) REFERENCES Customers(customer_name) 
 );
 
-CREATE TABLE Cookie (
-    cookie_id INT AUTO_INCREMENT,
+CREATE TABLE Cookie (    
     cookie_name VARCHAR(20),
-    PRIMARY KEY (cookie_id)
+    PRIMARY KEY (cookie_name)
 );
 
 CREATE TABLE Pallet (
@@ -33,18 +32,18 @@ CREATE TABLE Pallet (
     delivery_date DATETIME,
     blocked BOOLEAN,
     order_id INT,
-    cookie_id INT,
+    cookie_name VARCHAR(20),
     PRIMARY KEY (id),
     FOREIGN KEY (order_id) REFERENCES Orders(order_id),
-    FOREIGN KEY (cookie_id) REFERENCES Cookie(cookie_id) 
+    FOREIGN KEY (cookie_name) REFERENCES Cookie(cookie_name) 
 );
 
 CREATE TABLE OrderSpec (
     quantity INT,
     order_id INT,
-    cookie_id INT,
+    cookie_name VARCHAR(20),
     FOREIGN KEY (order_id) REFERENCES Orders(order_id),
-    FOREIGN KEY (cookie_id) REFERENCES Cookie(cookie_id)
+    FOREIGN KEY (cookie_name) REFERENCES Cookie(cookie_name)
 );
 
 CREATE TABLE Ingredient(
@@ -59,9 +58,9 @@ CREATE TABLE Ingredient(
 
 CREATE TABLE Recipes
 (
-    cookie_id INTEGER NOT NULL,
+    cookie_name VARCHAR(20),
     ingredient_Id INTEGER NOT NULL,
     quantity INTEGER NOT NULL,    
-    FOREIGN KEY (cookie_id) REFERENCES Cookie(cookie_id),
+    FOREIGN KEY (cookie_name) REFERENCES Cookie(cookie_name),
     FOREIGN KEY (ingredient_id) REFERENCES Ingredient(ingredient_id)
     );
