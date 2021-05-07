@@ -19,5 +19,26 @@ INSERT INTO Cookie(cookie_name) VALUES
 ;
 
 INSERT INTO Ingredient(name, stock, unit) VALUES
-    ('Bread crumbs,
+    ('Bread crumbs', 500 000, 'g'),
+    ('Butter', 500 000, 'g'),
+    ('Chocolate', 500 000, 'g'),
+    ('Chopped Almonds', 500 000, 'g'),
+    ('Cinnamon', 500 000, 'g'),
+    ('Egg whites', 500 000, 'ml'),
+    ('Eggs', 500 000, 'g'),
+    ('Fine-ground nuts', 500 000, 'g'),
+    ('Flour', 500 000, 'g'),
+    ('Ground, roasted nuts', 500 000, 'g'),
+    ('Icing sugar', 500 000, 'g'),
+    ('Marzipan', 500 000, 'g'),
+    ('Potato starch', 500 000, 'g'),
+    ('Roasted, chopped nuts', 500 000, 'g'),
+    ('Sodium bicarbonate', 500 000, 'g'),
+    ('Sugar', 500 000, 'g'),
+    ('Vanilla sugar', 500 000, 'g'),
+    ('Vanilla', 500 000, 'g'),
+    ('Wheat flour', 500 000, 'g'),
+
+
+
 	
