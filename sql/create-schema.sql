@@ -48,8 +48,9 @@ CREATE TABLE Cookie (
 );
 
 CREATE TABLE RecipeItem(
+    ingredient VARCHAR(32),
     quantity INT,
-
+    FOREIG KEY (ingredient) REFERENCES Ingredient(ingredient_name) 
 );
 
 CREATE TABLE Ingredient(
