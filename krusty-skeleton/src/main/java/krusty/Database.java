@@ -7,9 +7,9 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.sql.*;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
+import java.sql.Date;
+import java.time.LocalDate;
+import java.util.*;
 
 public class Database {
 	/**
@@ -111,21 +111,81 @@ public class Database {
 		return getJson(sql, title);
 	}
 
-	public String getPallets(Request req, Response res) {
-		String sql = ""; // TO DO: Fix sql statement
+	public String getPallets(Request req, Response res) throws SQLException {
+		String sql = "SELECT id, cookie_name AS cookie, production_date, customer_name AS customer, blocked FROM pallet INNER JOIN orders"; // TO DO: Fix sql statement
 		String title = "pallets";
+		StringBuilder sb = new StringBuilder();
 
-		/**
-		 * from
-		 * to
-		 * cookie
-		 * blocked
-		 * ^
-		 * params from request
-		 */
+		sb.append(sql);
 
-		return "{}";
-		//return getJson(sql, title);
+		List<String> paramList = Arrays.asList("from", "to", "cookie", "blocked");
+		HashMap<String, String> map = new HashMap<String, String>();
+
+		for (String param : paramList) {
+			if (req.queryParams(param) != null) {
+				map.put(param, req.queryParams(param));
+			}
+		}
+
+		if (map.size() > 0) {
+			sb.append(" WHERE");
+		}
+
+		int size = 1;
+
+		for (Map.Entry<String, String> entry : map.entrySet()) {
+			switch (entry.getKey()) {
+				case "from":
+					sb.append(" production_date >= ?");
+					break;
+				case "to":
+					sb.append(" production_date <= ?");
+					break;
+				case "blocked":
+					sb.append(" blocked = ?");
+					break;
+				case "cookie":
+					sb.append(" cookie_name = ?");
+					break;
+				default:
+					break;
+			}
+			if (map.size() > size) {
+				size++;
+				sb.append(" AND");
+			}
+		}
+
+		PreparedStatement stmt = conn.prepareStatement(sb.toString());
+
+		int i = 1;
+
+		for (Map.Entry<String, String> entry : map.entrySet()) {
+			switch (entry.getKey()) {
+				case "from":
+					stmt.setDate(i, Date.valueOf(req.queryParams("from")));
+					break;
+				case "to":
+					stmt.setDate(i, Date.valueOf(req.queryParams("to")));
+					break;
+				case "blocked":
+					stmt.setString(i, req.queryParams("blocked"));
+					break;
+				case "cookie":
+					stmt.setString(i, req.queryParams("cookie"));
+					break;
+				default:
+					break;
+			}
+			i++;
+		}
+
+		ResultSet rs = stmt.executeQuery();
+		String result = Jsonizer.toJson(rs, title);
+
+		System.out.println(result);
+
+		return result;
 	}
 
 	public String reset(Request req, Response res) {
@@ -186,9 +246,6 @@ public class Database {
 				stmt.setInt(1, entry.getValue()*54);
 				stmt.setString(2, entry.getKey());
 				stmt.executeUpdate();
-
-				sql = "INSERT production_date, INTO pallet";
-				Statment stmt2 =
 
 			} catch (SQLException e) {
 
