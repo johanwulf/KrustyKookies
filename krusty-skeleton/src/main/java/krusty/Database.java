@@ -72,12 +72,10 @@ public class Database {
 	private Connection conn;
 
 	public void connect() {
-		System.out.println("connected");
 		try {
 			conn = DriverManager.getConnection(jdbcString, jdbcUsername, jdbcPassword);
-			System.out.println("success");
 		} catch (SQLException e) {
-			System.out.println(e);
+
 		}
 	}
 
@@ -112,7 +110,7 @@ public class Database {
 	}
 
 	public String getPallets(Request req, Response res) throws SQLException {
-		String sql = "SELECT id, cookie_name AS cookie, production_date, customer_name AS customer, blocked FROM pallet INNER JOIN orders"; // TO DO: Fix sql statement
+		String sql = "SELECT id, cookie_name AS cookie, production_date, customer_name AS customer, blocked FROM pallet INNER JOIN orders ON orders.order_id = pallet.order_id"; // TO DO: Fix sql statement
 		String title = "pallets";
 		StringBuilder sb = new StringBuilder();
 
@@ -181,8 +179,8 @@ public class Database {
 		}
 
 		ResultSet rs = stmt.executeQuery();
-		String result = Jsonizer.toJson(rs, title);
 
+		String result = Jsonizer.toJson(rs, title);
 		System.out.println(result);
 
 		return result;
@@ -239,20 +237,29 @@ public class Database {
 		String sql = "UPDATE ingredient SET stock = stock - ? WHERE ingredient_name = ?";
 		HashMap<String, Integer> map = cookieRecipe(cookie);
 
-		map.entrySet().forEach(entry -> {
-			System.out.println(entry.getKey() + " " + entry.getValue());
-			try {
-				PreparedStatement stmt = conn.prepareStatement(sql);
-				stmt.setInt(1, entry.getValue()*54);
-				stmt.setString(2, entry.getKey());
-				stmt.executeUpdate();
+		for (Map.Entry<String, Integer> entry : map.entrySet()) {
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, entry.getValue()*54);
+			stmt.setString(2, entry.getKey());
+			stmt.executeUpdate();
+		}
 
-			} catch (SQLException e) {
+		sql = "INSERT INTO orders (order_date, delivery_date) VALUES (NOW(), NOW())";
+		Statement stmt = conn.createStatement();
 
-			}
-		});
+		stmt.executeUpdate(sql, stmt.RETURN_GENERATED_KEYS);
+		ResultSet rs = stmt.getGeneratedKeys();
 
-		return "{}";
+		int createdId = 0;
+		if (rs.next()) {
+			createdId = rs.getInt(1);
+		}
+
+		sql = "INSERT INTO pallet (production_date, delivery_date, blocked, cookie_name, order_id) VALUES (NOW(), NOW(), \"no\", \"" + cookie + "\"," + createdId + ")";
+
+		stmt.executeUpdate(sql);
+
+		return "{\n\t\"status\": \"ok\" ,\n \n\t\"id\":" +  createdId + "}";
 	}
 
 	private HashMap<String, Integer> cookieRecipe(String cookie) throws SQLException {
