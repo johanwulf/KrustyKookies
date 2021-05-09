@@ -30,7 +30,7 @@ CREATE TABLE Pallet (
     id INT AUTO_INCREMENT,
     production_date DATETIME,
     delivery_date DATETIME,
-    blocked BOOLEAN,
+    blocked varchar(3) DEFAULT 'no',
     order_id INT,
     cookie_name VARCHAR(20),
     PRIMARY KEY (id),
