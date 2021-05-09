@@ -1,4 +1,4 @@
-INSERT INTO Customers(customer_name, address) VALUES
+INSERT INTO Customers(name, address) VALUES
     ('Finkakor AB', 'Helsingborg'),
     ('Småbröd AB', 'Malmö'),
     ('Kaffebröd AB', 'Landskrona'),
@@ -18,7 +18,7 @@ INSERT INTO Cookie(cookie_name) VALUES
     ('Tango')
 ;
 
-INSERT INTO Ingredient(ingredient_name, stock, unit) VALUES
+INSERT INTO Ingredient(name, stock, unit) VALUES
     ('Bread crumbs', 500000, 'g'),
     ('Butter', 500000, 'g'),
     ('Chocolate', 500000, 'g'),
