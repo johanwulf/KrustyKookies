@@ -7,6 +7,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.sql.*;
+import java.util.Arrays;
+import java.util.List;
 
 public class Database {
 	/**
@@ -69,7 +71,7 @@ public class Database {
 	private Connection conn;
 
 	public void connect() {
-
+		System.out.println("connected");
 		try {
 			conn = DriverManager.getConnection(jdbcString, jdbcUsername, jdbcPassword);
 			System.out.println("success");
@@ -81,28 +83,28 @@ public class Database {
 	// TODO: Implement and change output in all methods below!
 
 	public String getCustomers(Request req, Response res) {
-		String sql = "SELECT name, address FROM customers";
+		String sql = "SELECT customer_name, address FROM customers";
 		String title = "customers";
 
 		return getJson(sql, title);
 	}
 
 	public String getRawMaterials(Request req, Response res) {
-		String sql = "SELECT ingredient_name, stock, unit FROM ingredient"; // TO DO: Fix sql statement
+		String sql = "SELECT ingredient_name, stock, unit FROM ingredient";
 		String title = "raw-materials";
 
 		return getJson(sql, title);
 	}
 
 	public String getCookies(Request req, Response res) {
-		String sql = "SELECT cookie_name FROM cookie"; // TO DO: Fix sql statement
+		String sql = "SELECT cookie_name FROM cookie";
 		String title = "cookies";
 
 		return getJson(sql, title);
 	}
 
 	public String getRecipes(Request req, Response res) {
-		String sql = "SELECT cookie_name, Recipes.ingredient_name, quantity, unit FROM Recipes, Ingredient WHERE Recipes.ingredient_name = Ingredient.ingredient_name"; // TO DO: Fix sql statement
+		String sql = "SELECT cookie_name, Recipes.ingredient_name, quantity, unit FROM Recipes, Ingredient WHERE Recipes.ingredient_name = Ingredient.ingredient_name";
 		String title = "recipes";
 
 		return getJson(sql, title);
@@ -121,38 +123,66 @@ public class Database {
 		 * params from request
 		 */
 
-
-		return getJson(sql, title);
+		return "{}";
+		//return getJson(sql, title);
 	}
 
 	public String reset(Request req, Response res) {
 		String[] tables = {"cookie", "customers", "ingredient", "orders", "orderspec", "pallet", "recipes"};
+		List values = Arrays.asList("cookie", "customers", "ingredient", "recipes");
 
 		for (String table : tables) {
 			try {
 				Statement stmt = conn.createStatement();
 				stmt.execute("SET FOREIGN_KEY_CHECKS=0");
 				String sql = "TRUNCATE TABLE " + table;
-				stmt.executeUpdate(sql);
+				stmt.execute(sql);
+
+				if (values.contains(table)) {
+					stmt.executeUpdate(getValueQuery(table));
+				}
+
+				stmt.execute("SET FOREIGN_KEY_CHECKS=1");
 			} catch (SQLException e){
 				e.printStackTrace();
 			}
 		}
 
-		try {
-			Statement stmt = conn.createStatement();
-			stmt.executeUpdate(Cookie);
-			stmt.executeUpdate(Customers);
-			stmt.executeUpdate(Ingredient);
-			stmt.executeUpdate(Recipes);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		return "{\n\t\"status\": \"ok\"\n}";
+	}
 
-		return "{ \"status\": \"ok\" }";
+	private String getValueQuery(String table) {
+		switch (table) {
+			case "cookie":
+				return Cookie;
+			case "customers":
+				return Customers;
+			case "ingredient":
+				return Ingredient;
+			case "recipes":
+				return Recipes;
+			default:
+				return "";
+		}
 	}
 
 	public String createPallet(Request req, Response res) {
+		String cookie = req.queryParams("cookie");
+		String sql = "SELECT * FROM cookie WHERE cookie_name = ?;";
+
+		try {
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			stmt.setString(1, cookie);
+
+
+		} catch (SQLException e) {
+
+		}
+
+
+
+
+
 		return "{}";
 	}
 
