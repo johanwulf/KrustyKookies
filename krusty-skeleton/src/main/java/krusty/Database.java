@@ -8,6 +8,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.sql.*;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 public class Database {
@@ -30,12 +31,12 @@ public class Database {
 			"    ('Skånekakor AB', 'Perstorp')" +
 			";";
 	private static final String Cookie = "INSERT INTO Cookie(cookie_name) VALUES" +
-			"    ('Almond Delight')," +
 			"    ('Amneris')," +
 			"    ('Berliner')," +
 			"    ('Nut Cookie')," +
 			"    ('Nut Ring')," +
-			"    ('Tango')" +
+			"    ('Tango')," +
+			"    ('Almond Delight')" +
 			";";
 	private static final String Ingredient = "INSERT INTO Ingredient(ingredient_name, stock, unit) VALUES" +
 			"    ('Bread crumbs', 500000, 'g')," +
@@ -83,21 +84,21 @@ public class Database {
 	// TODO: Implement and change output in all methods below!
 
 	public String getCustomers(Request req, Response res) {
-		String sql = "SELECT customer_name, address FROM customers";
+		String sql = "SELECT customer_name AS name, address FROM customers";
 		String title = "customers";
 
 		return getJson(sql, title);
 	}
 
 	public String getRawMaterials(Request req, Response res) {
-		String sql = "SELECT ingredient_name, stock, unit FROM ingredient";
+		String sql = "SELECT ingredient_name AS name, stock AS amount, unit FROM ingredient";
 		String title = "raw-materials";
 
 		return getJson(sql, title);
 	}
 
 	public String getCookies(Request req, Response res) {
-		String sql = "SELECT cookie_name FROM cookie";
+		String sql = "SELECT cookie_name AS name FROM cookie";
 		String title = "cookies";
 
 		return getJson(sql, title);
@@ -166,24 +167,56 @@ public class Database {
 		}
 	}
 
-	public String createPallet(Request req, Response res) {
+	public String createPallet(Request req, Response res) throws SQLException {
 		String cookie = req.queryParams("cookie");
-		String sql = "SELECT * FROM cookie WHERE cookie_name = ?;";
 
-		try {
-			PreparedStatement stmt = conn.prepareStatement(sql);
-			stmt.setString(1, cookie);
-
-
-		} catch (SQLException e) {
-
+		if (cookie == null) {
+			return "{\n\t\"status\": \"error\"\n}";
+		} else if (!checkCookie(cookie)) {
+			return "{\n\t\"status\": \"unknown cookie\"\n}";
 		}
 
+		String sql = "UPDATE ingredient SET stock = stock - ? WHERE ingredient_name = ?";
+		HashMap<String, Integer> map = cookieRecipe(cookie);
 
+		map.entrySet().forEach(entry -> {
+			System.out.println(entry.getKey() + " " + entry.getValue());
+			try {
+				PreparedStatement stmt = conn.prepareStatement(sql);
+				stmt.setInt(1, entry.getValue()*54);
+				stmt.setString(2, entry.getKey());
+				stmt.executeUpdate();
 
+				sql = "INSERT production_date, INTO pallet";
+				Statment stmt2 =
 
+			} catch (SQLException e) {
+
+			}
+		});
 
 		return "{}";
+	}
+
+	private HashMap<String, Integer> cookieRecipe(String cookie) throws SQLException {
+		HashMap<String, Integer> map = new HashMap<String, Integer>();
+		String sql = "SELECT cookie_name, ingredient_name, quantity FROM recipes WHERE cookie_name=\"" + cookie + "\"";
+		Statement stmt = conn.createStatement();
+		ResultSet rs = stmt.executeQuery(sql);
+
+		while(rs.next()) {
+			map.put(rs.getString(2), (Integer) rs.getInt(3));
+		}
+
+		return map;
+	}
+
+	private boolean checkCookie(String cookie) throws SQLException {
+		PreparedStatement stmt = conn.prepareStatement("SELECT * FROM cookie WHERE cookie_name=?");
+		stmt.setString(1, cookie);
+		ResultSet rs = stmt.executeQuery();
+
+		return rs.next();
 	}
 
 	private String getJson(String sql, String title) {
