@@ -50,6 +50,7 @@ public class Jsonizer {
 	 * @throws SQLException
 	 */
 	public static String toJson(ResultSet rs, String name) throws SQLException {
+
 		try {
 			ResultSetMetaData meta = rs.getMetaData();
 

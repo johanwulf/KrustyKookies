@@ -44,6 +44,8 @@ public class KrustyTests {
 	public void test02Cookies() throws JSONException {
 		String expected = readFile("ExpectedCookies.json");
 		String actual = getURL("cookies");
+		System.out.println(getURL("cookies"));
+		System.out.println(readFile("ExpectedCookies.json"));
 		JSONAssert.assertEquals(expected, actual, false);
 	}
 

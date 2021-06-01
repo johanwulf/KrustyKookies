@@ -1,5 +1,7 @@
 package krusty;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import spark.Request;
 import spark.Response;
 
@@ -33,16 +35,16 @@ public class Database {
 	private static final String Cookie = "INSERT INTO Cookie(cookie_name) VALUES" +
 			"    ('Amneris')," +
 			"    ('Berliner')," +
-			"    ('Nut Cookie')," +
-			"    ('Nut Ring')," +
+			"    ('Nut cookie')," +
+			"    ('Nut ring')," +
 			"    ('Tango')," +
-			"    ('Almond Delight')" +
+			"    ('Almond delight')" +
 			";";
 	private static final String Ingredient = "INSERT INTO Ingredient(ingredient_name, stock, unit) VALUES" +
 			"    ('Bread crumbs', 500000, 'g')," +
 			"    ('Butter', 500000, 'g')," +
 			"    ('Chocolate', 500000, 'g')," +
-			"    ('Chopped Almonds', 500000, 'g')," +
+			"    ('Chopped almonds', 500000, 'g')," +
 			"    ('Cinnamon', 500000, 'g')," +
 			"    ('Egg whites', 500000, 'ml')," +
 			"    ('Eggs', 500000, 'g')," +
@@ -285,13 +287,12 @@ public class Database {
 
 	private String getJson(String sql, String title) {
 		try {
-			Statement stmt = conn.createStatement();
-			ResultSet rs = stmt.executeQuery(sql);
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			ResultSet rs = stmt.executeQuery();
 
 			return Jsonizer.toJson(rs, title);
 		} catch (SQLException e) {
 			return "";
 		}
-
 	}
 }
