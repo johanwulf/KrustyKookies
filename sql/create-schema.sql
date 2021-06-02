@@ -16,7 +16,7 @@ CREATE TABLE Orders (
     order_id INT AUTO_INCREMENT,
     order_date DATETIME,
     delivery_date DATETIME,
-    customer_name VARCHAR(20),
+    customer_name VARCHAR(20) NOT NULL,
     PRIMARY KEY (order_id),
     FOREIGN KEY (customer_name) REFERENCES Customers(customer_name) 
 );
