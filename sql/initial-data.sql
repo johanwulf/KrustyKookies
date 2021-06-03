@@ -22,7 +22,7 @@ INSERT INTO Ingredient(ingredient_name, stock, unit) VALUES
     ('Bread crumbs', 500000, 'g'),
     ('Butter', 500000, 'g'),
     ('Chocolate', 500000, 'g'),
-    ('Chopped Almonds', 500000, 'g'),
+    ('Chopped almonds', 500000, 'g'),
     ('Cinnamon', 500000, 'g'),
     ('Egg whites', 500000, 'ml'),
     ('Eggs', 500000, 'g'),
@@ -41,7 +41,7 @@ INSERT INTO Ingredient(ingredient_name, stock, unit) VALUES
 ;
 
 INSERT INTO Recipes (cookie_name, ingredient_name, quantity) VALUES
-    ('Almond delight', 'Butter', 400),('Almond delight', 'Chopped Almonds', 279),('Almond delight', 'Cinnamon', 10),('Almond delight', 'Flour', 400),('Almond delight', 'Sugar', 270),
+    ('Almond delight', 'Butter', 400),('Almond delight', 'Chopped almonds', 279),('Almond delight', 'Cinnamon', 10),('Almond delight', 'Flour', 400),('Almond delight', 'Sugar', 270),
     ('Amneris', 'Butter', 250),('Amneris', 'Eggs', 250),('Amneris', 'Marzipan', 750),('Amneris', 'Potato starch', 25),('Amneris', 'Wheat flour', 25),
     ('Berliner', 'Butter', 250),('Berliner', 'Chocolate', 50),('Berliner', 'Eggs', 50),('Berliner', 'Flour', 350),('Berliner', 'Icing sugar', 100),('Berliner', 'Vanilla sugar', 5),
     ('Nut cookie', 'Bread crumbs', 125),('Nut cookie', 'Chocolate', 50),('Nut cookie', 'Egg whites', 350),('Nut cookie', 'Fine-ground nuts', 750),('Nut cookie', 'Ground, roasted nuts', 625),('Nut cookie', 'Sugar', 375),
