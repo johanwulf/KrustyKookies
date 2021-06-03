@@ -246,7 +246,7 @@ public class Database {
 			stmt.executeUpdate();
 		}
 
-		sql = "INSERT INTO orders (order_date, delivery_date) VALUES (NOW(), NOW())";
+		sql = "INSERT INTO orders (order_date, delivery_date, customer_name) VALUES (NOW(), NOW(), \"Finkakor AB\")";
 		Statement stmt = conn.createStatement();
 
 		stmt.executeUpdate(sql, stmt.RETURN_GENERATED_KEYS);
